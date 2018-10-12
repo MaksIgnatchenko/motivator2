@@ -12,12 +12,8 @@
 */
 
 use App\Http\Controllers\AuthSocialController;
+use App\User;
 
 Route::get('/', function () {
     return view('welcome');
 });
-
-Route::get('auth/{provider}', 'Auth\AuthController@redirectToProvider');
-Route::get('auth/{provider}/callback', 'Auth\AuthController@handleProviderCallback');
-
-Route::post('login/{service}', 'AuthSocialController@loginSocial');

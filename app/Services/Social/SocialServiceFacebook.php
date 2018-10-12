@@ -10,12 +10,13 @@ namespace App\Services\Social;
 use Facebook\FacebookApp;
 use Facebook\FacebookClient;
 use Facebook\FacebookRequest;
+use App\Enums\SocialServiceEnum;
 
 class SocialServiceFacebook extends SocialServiceAbstract implements SocialServiceInterface
 {
     protected $fbApp;
 
-    protected const FIELDS = 'id,name,picture{url}';
+    protected const FIELDS = 'id,name';
 
     /**
      * SocialServiceFacebook constructor.
@@ -48,6 +49,10 @@ class SocialServiceFacebook extends SocialServiceAbstract implements SocialServi
 
         $response = $client->sendRequest($fbRequest);
 
-        return $response->getDecodedBody();
+        $userData = $response->getDecodedBody();
+
+        $userData['social_provider'] = SocialServiceEnum::SERVICE_FACEBOOK;
+
+        return $userData;
     }
 }
