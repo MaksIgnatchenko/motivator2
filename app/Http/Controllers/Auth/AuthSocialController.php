@@ -14,6 +14,7 @@ use App\Http\Requests\LoginSocialRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use App\User;
+use Laravel\Socialite\Facades\Socialite;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -28,6 +29,8 @@ class AuthSocialController extends Controller
     {
         $this->middleware('auth:api', ['except' => [
             'loginSocial',
+            'redirectToProvider',
+            'handleProviderCallback'
         ]]);
     }
 
@@ -36,15 +39,18 @@ class AuthSocialController extends Controller
     {
         $socialServiceDto = new SocialServiceDto(
             $request->get('token'),
+            $request->get('tokenSecret'),
             $request->get('device')
         );
         $serviceInstance = SocialServiceFactory::getSocialServiceInstance($service, $socialServiceDto);
 
         $userData = $serviceInstance->getUserData();
 
-        $token = $this->authSocialUser($userData);
+        return response()->json($userData);
 
-        return $this->respondWithToken($token);
+//        $token = $this->authSocialUser($userData);
+//
+//        return $this->respondWithToken($token);
     }
 
 
@@ -84,6 +90,38 @@ class AuthSocialController extends Controller
     public function refresh(): JsonResponse
     {
         return $this->respondWithToken(auth()->refresh());
+    }
+
+    public function redirect($provider)
+    {
+        return Socialite::driver($provider)->redirect();
+    }
+
+    public function callback($provider)
+    {
+
+        $user = Socialite::driver($provider)->user();
+        dd($user);
+
+//        auth()->login($user);
+
+//        return redirect()->to('/');
+    }
+
+
+
+
+    public function redirectToProvider($provider)
+    {
+        return Socialite::driver($provider)
+            ->redirect();
+    }
+
+    public function handleProviderCallback($provider)
+    {
+        $user = Socialite::driver($provider)
+            ->user();
+        dd($user);
     }
 
 

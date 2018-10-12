@@ -11,6 +11,7 @@ use App\DTO\SocialServiceDto;
 use App\Enums\SocialServiceEnum;
 use App\Exceptions\SocialServiceFactoryException;
 use App\Services\Social\SocialServiceFacebook;
+use App\Services\Social\SocialServiceTwitter;
 
 class SocialServiceFactory
 {
@@ -28,6 +29,8 @@ class SocialServiceFactory
         switch ($service) {
             case SocialServiceEnum::SERVICE_FACEBOOK:
                 return new SocialServiceFacebook($socialService->getToken());
+            case SocialServiceEnum::SERVICE_TWITTER:
+                return new SocialServiceTwitter($socialService->getToken(), $socialService->getTokenSecret());
             default:
                 throw new SocialServiceFactoryException("Illegal service name: $service");
         }

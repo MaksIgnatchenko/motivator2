@@ -12,16 +12,17 @@ abstract class SocialServiceAbstract
     /** @var string $token */
     protected $token;
 
-    /** @var array  $credentials */
-    protected $credentials;
+    /** @var string $tokenSecret */
+    protected $tokenSecret;
 
     /**
      * SocialServiceAbstract constructor.
      *
      * @param $token
      */
-    public function __construct($token)
+    public function __construct($token, $tokenSecret = null)
     {
         $this->token = $token;
+        $this->tokenSecret = $tokenSecret;
     }
 }

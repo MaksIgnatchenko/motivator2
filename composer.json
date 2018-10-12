@@ -6,6 +6,8 @@
     "type": "project",
     "require": {
         "php": ">=7.0.0",
+        "abraham/twitteroauth": "^0.9.2",
+        "corbanb/freebird-php": "^0.2.3",
         "facebook/graph-sdk": "^5.6",
         "fideloper/proxy": "~3.3",
         "laravel/framework": "5.5.*",

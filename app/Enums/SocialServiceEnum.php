@@ -10,5 +10,5 @@ namespace App\Enums;
 abstract class SocialServiceEnum
 {
     public const SERVICE_FACEBOOK = 'facebook';
-    public const SERVICE_GOOGLE = 'google';
+    public const SERVICE_TWITTER = 'twitter';
 }

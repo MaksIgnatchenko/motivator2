@@ -13,6 +13,9 @@ class SocialServiceDto
     protected $token;
 
     /** @var string */
+    protected $tokenSecret;
+
+    /** @var string */
     protected $device;
 
     /**
@@ -21,15 +24,21 @@ class SocialServiceDto
      * @param string $token
      * @param string $device
      */
-    public function __construct(string $token, string $device = null)
+    public function __construct(string $token, $tokenSecret = null,  string $device = null)
     {
         $this->token = $token;
+        $this->tokenSecret = $tokenSecret;
         $this->device = $device;
     }
 
     public function getToken()
     {
         return $this->token;
+    }
+
+    public function getTokenSecret()
+    {
+        return $this->tokenSecret;
     }
 
     public function getDevice()
@@ -40,6 +49,13 @@ class SocialServiceDto
     public function setToken(string $token): SocialServiceDto
     {
         $this->token = $token;
+
+        return $this;
+    }
+
+    public function setTokenSecret(string $tokenSecret): SocialServiceDto
+    {
+        $this->tokenSecret = $tokenSecret;
 
         return $this;
     }
